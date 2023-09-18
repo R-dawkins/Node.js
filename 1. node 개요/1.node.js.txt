@@ -1,0 +1,44 @@
+1. Node.js란?
+  1) ~ 1995년 이전 : HTML + CSS --> 웹사이트 개발
+     1995년 이후 ~ : HTML + CSS + JS --> 웹사이트 개발
+  2) JavaScript 
+    - Netscape사에서 개발한 Live Script > Mocha > JavaScript 12월 발표
+  3) 브라우저에서 지원하는 자바스크립트 엔진
+    - 사파리(Safari) : JavaScript Core
+    - IE(Internet Explorer) : Charkara
+    - Firefox : Spider Monkey
+    - Chrome : V8 엔진(JIT Just-in-time compilation)
+    - Edge : Chakara --> 2021년도에 V8 엔진 탑재함
+  4) 2009년 Ryan Dahl(라이언 달)이 Node.js를 발표
+    - Deno : 자바스크립트 환경 개발자 - TypeScript 런타임 최초 개발자
+    -- JavaScript everywhere --
+  5) Node.js는 크롬의 V8 JavaSciprt엔진으로 빌드 된 JavaScript 런타임 환경이다
+     
+  6) Browser vs Node.js
+    browser => 동적인 웹 애플리케이션 구현 가능
+              ------------------------------------------
+              ㄴweb API - Windows, Document, Ajax, JSON...
+
+    Node.js => 서버와 서버간의 렌더링, 백엔드 서버 구현,  프론트 엔드 개발 등...
+              ------------------------------------------
+              ㄴNode API
+
+2. Node.js를 어떻게 공부할 것인가?
+  1) Node의 구조를 정확히 이해하고 실행방식을 기억한다.
+  2) Node에서 제공하는 API를 잘 사용할 줄 알아야 한다.
+     API는 자바스크립트 문법으로 작성되었으므로, 문법을 정확히 익히도록 한다.
+  3) 개발을 편리하게 지원해주는 프레임워크에 대해서 익힌다.
+     Node.js --> Express, Rust
+    Web API(브라우저) --> React, Vue
+
+3. Node.js 특징 4가지
+  1) JavaScript Runtime 환경이다
+    - V8 엔진 탑재 -> EcmaScript6, Open Source, Node API...
+  2) Single Thread
+    - Process, Thread 차이점
+  3) Non-Blocking(비동기적) IO (Input OutPut 요청이 들어오면)
+  4) Event - Driven
+  싱글 스레드라 멀티 스레드보다는 성능이 떨어지지만 비동기적 IO등으로 성능을 향상시킴
+  멀티 스레드처럼 싱글 스레드를 사용하기 위해 비동기적 IO를 이용
+  파일을 읽어오는 작업(읽거나 출력하는 요청 = IO)
+  비동기적 요청(IO 작업) -> Node API(Back ground) ->파일읽기종료 -> Tast Queue
