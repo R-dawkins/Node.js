@@ -1,6 +1,6 @@
-  // var num; 
+  var num = 101; //전역 스코프의 전역 변수 num (global 객체의 직속 property는 아님)
   function hello(num){
-    this.num = num; /* 전역 변수로 선언된다 */
+    this.num = num; /* (global 객체의 property인 전역 변수 num)전역 변수로 선언된다 */
     console.log(num);
     // console.log(this); //전역 객체(global)
   }//함수 선언식
