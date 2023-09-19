@@ -1,4 +1,3 @@
-const { log } = require('console');
 const path = require('path');
 console.log(__dirname); //global에 있는 디렉토리 -현재 폴더의 절대경로
 console.log(__filename); //global에 있는 파일 - 현재 실행파일의 절대경로

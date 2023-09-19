@@ -1,7 +1,7 @@
-
+const os = require('os');
 const fs = require('fs').promises;
 
-//test.txt 읽어서 데이터 받아오기, 콘솔에 출력
+// test.txt 읽어서 데이터 받아오기, 콘솔에 출력
 fs.readFile('./test.txt','utf-8')
 .then((data)=>{
 console.log(data);
@@ -17,7 +17,7 @@ fs.writeFile('./test.txt','hello~ java script node js')
 //쓰는것이 더 빠름
 
 //test.txt 파일에 데이터 추가하기
-fs.appendFile('./test.txt','\r\n XXXXX \r\n')
+fs.appendFile('./test.txt',`XXXXX${os.EOL}`)
 .then(console.log('--appendFile--'))
 .catch(console.error)
 //buffer? 임시저장소
@@ -29,5 +29,5 @@ fs.copyFile('./test.txt','./test-copy.txt')
 
 // sub-folder 생성
 fs.mkdir('sub-folder')
-.then(console.log)
+.then(console.log('--mkdir--'))
 .catch(console.error)
