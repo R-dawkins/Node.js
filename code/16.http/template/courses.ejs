@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node Server Test</title>
+</head>
+<body>
+  <h1>Courses</h1>
+  <ul>
+  <% courses.forEach(course =>{ %>
+  <li><%= course.name %></li>
+  <% }) %>
+  </ul>
+</body>
+</html>
