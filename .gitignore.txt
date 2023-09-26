@@ -2,3 +2,4 @@ node_modules/
 code/node_modules/
 node_module/
 code/node_module/
+node_modules
