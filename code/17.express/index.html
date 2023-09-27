@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Welcome to Node server</h1>
+  <a href="/login">Login</a> <br>
+  <!-- a태그와 같은 link로 정보를 넘기려면 쿼리스트링방법 뿐 -->
+  <!-- /login/test 와 같이 앞의 http~를 축약해서 사용 가능 -->
+  <!-- /login 에서 가장 앞의 /는 root를 뜻한다 (port바로 후) -->
+  <!-- /login과 login은 차이가 있다. root/login과 현재경로/login의 차이 -->
+  <!-- http://localhost:8080/login 페이지에서 href="test"를 누른다면 -->
+  <!-- http://localhost:8080/login/test 이 페이지로-->
+  <!-- http://localhost:8080/login 페이지에서 href="/test"를 누른다면-->
+  <!-- http://localhost:8080/test 이 페이지로 가게 된다 -->
+  <a href="/join">Join</a>
+</body>
+</html>

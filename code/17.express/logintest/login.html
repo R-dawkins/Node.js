@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Login Form</h1>
+  <fieldset>
+    <form name="loginForm" action="/login" method="post">
+      <ul>
+        <li>
+          <label for="id">ID</label>
+          <input type="text" name="id" id="id"><!-- name값이 body에 포함되어 넘어옴 -->
+        </li>
+        <li>
+          <label for="pw">Password</label>
+          <input type="password" name="pw" id="pw">
+        </li>
+        <li>
+          <button type="submit">login</button>
+          <button type="reset">cancel</button>
+        </li>
+      </ul>
+    </form>
+  </fieldset>
+  <a href="/join">회원가입</a>
+</body>
+</html>
