@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dwitter</title>
+</head>
+<body>
+  <h1>Dwitter</h1>
+  <ul>
+    <li><a href="/dwitter">All Tweets</a></li>
+    <li><a href="#">My Tweets</a></li>
+    <li><a href="#">Login</a></li>
+  </ul>
+  <main>
+    <form action="/dwitter" method="post" name="contentForm" style="border:2px solid gray" >
+      <input type="text" name="id" placeholder="id">
+      <input type="text" name="name" placeholder="name">
+      <input type="text" name="content" id="content" style="width: 70%;" placeholder="content">
+      <button type="submit">POST</button>
+    </form>
+      <% renderList.forEach((tweet)=>{ %>
+      <div class="content" style="border: 1px solid gray;margin-top: 10px;">
+        <%= tweet.pid %>
+        <span style="float:right;cursor: pointer;" onclick="remove('<%= tweet.pid %>')">삭제❌</a></span>
+        <span style="float:right;cursor: pointer;" onclick="updateToggle('<%= tweet.pid %>')">편집✏&nbsp;&nbsp;</span>
+        <img style="clear:both" src="https://lh3.googleusercontent.com/ogw/AKPQZvygLVnCYOdxNAsd7dGjdJN5XwF770wmOLwyTvUOgw=s32-c-mo" alt="">
+        <span>[<%= tweet.name %>]</span>
+        <span><a href="/dwitter/<%= tweet.id %>">@<%= tweet.id %></a></span>
+        <span><%= tweet.date %></span>
+        <div>
+          <%= tweet.content %>
+        </div>
+        <div id="updateForm_<%= tweet.pid %>" style="display: none;">
+          <input type="text" id="content_<%= tweet.pid %>" style="width: 80%;background:rgb(200, 231, 241);">
+          <button type="button" id="btnUpdate" onclick="update('<%= tweet.pid %>')">Update</button>
+        </div>
+      </div>
+      <% }) %>
+  </main>
+
+  <script>
+    function updateToggle(pid){//pid값을 parameter로 가져오는것 매우중요
+      const updateForm = document.querySelector(`#updateForm_${pid}`)
+      const display = updateForm.style.display;
+      const contentText = document.querySelector(`#content_${pid}`)
+      // updateForm.classList.toggle('active')
+      if(display === "none")
+      {
+        updateForm.style.display="block"
+        contentText.focus();
+      }
+      else{
+        updateForm.style.display="none"
+        contentText.value = "";
+      }
+    }
+    // updateToggle
+
+    function update(pid){
+      const updateText = document.querySelector(`#content_${pid}`).value;
+      fetch('/dwitter', //매우중요 ****************************
+      {
+        method :'PUT',
+        headers : {'content-Type': 'application/json'},
+        body : JSON.stringify({pid : pid, content : updateText})//json타입이기때문에 {}로 감싼다
+      })
+      .then((result)=>{
+        if(result.status === 204)
+        {
+          window.location.reload();
+        }
+      })
+      .catch(console.error)
+    }
+    //update
+
+    function remove(pid){
+      fetch('/dwitter',
+      {
+        method : 'DELETE',
+        headers : {'content-Type' : 'application/json'},
+        body : JSON.stringify({pid : pid})
+      })
+      .then((result)=>{
+        if(result.status === 204){
+          window.location.reload();
+        }
+      })
+      .catch(console.error)
+    }
+  </script>
+</body>
+</html>

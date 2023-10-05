@@ -1,0 +1,13 @@
+요청정보
+dweet content = name, id, day, content
+
+1. GET: /dwitter - all tweets list
+http://localhost:8080/dwitter
+
+2. POST: /dwitter - tweet create
+
+3.  GET: /dwitter/:id - my tweets list
+    GET: /dwitter?id=myid - my tweets list
+
+4.  PUT: /dwitter/:id - my dweet update
+5.  DELETE: /dwitter/:id - my dweet delete
