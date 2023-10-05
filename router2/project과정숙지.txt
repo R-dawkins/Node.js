@@ -1,0 +1,26 @@
+프로젝트 폴더명 : router2
+실행파일 : app.js
+라우터 파일 폴더 : router2/route
+라우터 파일 :
+router2/route/posts.js
+router2/route/users.js
+
+실행조건
+/posts, /users
+
+/posts
+GET - http://localhost:8080/posts
+POST - http://localhost:8080/posts
+PUT - http://localhost:8080/posts/test
+DELETE - http://localhost:8080/posts/test
+
+/users
+GET - http://localhost:8080/users
+POST - http://localhost:8080/users
+PUT - http://localhost:8080/users/test
+DELETE - http://localhost:8080/users/test
+
+요구사항
+-노드의 express 라이브러리 이용
+-자바스크립트 문법을 이용하여 프로젝트 진행
+-postman을 이용하여 테스트
