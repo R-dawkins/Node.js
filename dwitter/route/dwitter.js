@@ -19,7 +19,7 @@ let dwitterList = [
 
   } */
 ];
-
+//전역으로 배열 선언
 
 //서버에서 그때그때 받아오는 데이터들을 동적데이터 다이나믹데이터 (서버나 메모리와 연동된 데이터)
 //가만히 있는 데이터는 정적 데이터 스태틱 데이터
@@ -29,7 +29,7 @@ router.use(express.urlencoded({extended:true}));
 router.use(express.json())
 router
 .get('/',(req, res, next) => {
-    const renderList = dwitterList;
+    const renderList = dwitterList; //블록스코프 활용하여 렌더링만 할 배열 생성
     ejs
     .renderFile('./template/index.ejs', {renderList})
     .then((data)=>{
@@ -91,7 +91,7 @@ router.get('/:id',(req, res, next) => {
   console.log(req.params.id);
   
   let id = req.params.id
-  let mydweet = dwitterList.filter((list)=> list.id === id)
+  let mydweet = dwitterList.filter((list)=> list.id === id) //블록스코프 활용하여 렌더링만 할 배열 생성 전역을 건드리지(변경) 않는다
   console.log(dwitterList);
   const renderList = mydweet;
   ejs
