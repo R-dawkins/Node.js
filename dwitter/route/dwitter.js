@@ -29,7 +29,7 @@ router.use(express.urlencoded({extended:true}));
 router.use(express.json())
 router
 .get('/',(req, res, next) => {
-    const renderList = dwitterList; //블록스코프 활용하여 렌더링만 할 배열 생성
+    const renderList = dwitterList; //블록스코프 활용하여 렌더링 할 때만 쓸 배열 생성
     ejs
     .renderFile('./template/index.ejs', {renderList})
     .then((data)=>{
@@ -45,7 +45,6 @@ router.post('/',(req, res, next) => {
   const pid = Math.trunc(Math.random() * 1000);
   let date = new Date(Date.now());
   date = date.toLocaleDateString();
-  console.log({id,name,content,pid,date});
   dwitterList.push({id,name,content,pid,date})
   res.redirect('/dwitter')// 
 })
@@ -61,17 +60,7 @@ router.put('/',(req, res, next) => {
   res.status(204).send('update success')
 });
 
-router.delete('/',(req, res, next) => {
-  const {pid} = req.body;
-  dwitterList = dwitterList.filter((dwitter)=>dwitter.pid !== parseInt(pid));
-  console.log(dwitterList);
-  // dwitterList.filter((list,idx,source)=>{
-  //   if(list.pid === parseInt(pid)){
-  //     dwitterList.splice(idx,1)
-  //   }
-  // })
-  res.status(204).send('delete success')
-})
+
 
 
 /* .delete('/:id',(req, res, next) => {
@@ -87,13 +76,14 @@ router.delete('/',(req, res, next) => {
   }
 }) */
 
+// 3.  GET: /dwitter/:id - my tweets list
+// a태그로 넘어오는 데이터는 get방식으로 넘어온다
 router.get('/:id',(req, res, next) => {
-  console.log(req.params.id);
-  
   let id = req.params.id
-  let mydweet = dwitterList.filter((list)=> list.id === id) //블록스코프 활용하여 렌더링만 할 배열 생성 전역을 건드리지(변경) 않는다
-  console.log(dwitterList);
-  const renderList = mydweet;
+  const renderList = dwitterList.filter((list)=> list.id === id) //블록스코프 활용하여 렌더링만 할 배열 생성 전역을 건드리지(변경) 않는다
+  //if(list.id === id){return list}를 축약한 것이 위 문장
+  
+  
   ejs
   .renderFile('./template/index.ejs', {renderList})
   .then((data)=>{
@@ -103,13 +93,26 @@ router.get('/:id',(req, res, next) => {
   res.status(200)
 })
 
-
-// 3.  GET: /dwitter/:id - my tweets list
-// a태그로 넘어오는 데이터는 get방식으로 넘어온다
-
 // 5.  DELETE: /dwitter/:id - my dweet delete
+router.delete('/',(req, res, next) => {
+  const {pid} = req.body;
+  dwitterList = dwitterList.filter((dwitter)=>dwitter.pid !== parseInt(pid));
+  // dwitterList.filter((list,idx,source)=>{
+  //   if(list.pid === parseInt(pid)){
+  //     dwitterList.splice(idx,1)
+  //   }
+  // })
+  res.status(204).send('delete success')
+})
 
 
+//토글기능
+//pk(private key)
+//블록 스코핑을 이용한 my dweet
+//crud작업? db(mysql)랑 서버(node.js)데이터 교환(read) ,수정(update, delete, create) 등의 작업
+//댓글에도 어떤 글에 댓글을 썻는지 구분하는 id가 필요함
+//어떤 글의 id가 100이라면 댓글에도 그 100이라는 id가 필요
+//https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=101 구현연습
 export default router
 
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News</title>
+</head>
+<body>
+  <h1>헤드라인 뉴스</h1>
+  <hr>
+  <div style="text-align: right;">
+    <button type="button" id="btnReg" onclick="regToggle()">뉴스등록</button>
+  </div>
+  <form name="regForm" id="regForm" style="display: none;" action="/news/register" method="post">
+    URL : <input type="text" name="url" placeholder="img url" style="width: 70%;"><br>
+    Title : <input type="text" name="title" placeholder="title" style="width: 70%;"><br>
+    Content : <input type="text" name="content" placeholder="content" style="width: 70%;"><br>
+    <button type="submit">등록</button>
+    <button type="reset">취소</button>
+  </form>
+
+  <ul style="list-style: none;">
+    <% renderList.forEach((news)=>{ %>
+    <li style="border-bottom: 1px solid #ccc;height: 100px;">
+      <img src="<%= news.url %>" style="width: 100px; height: 80px; float: left;margin-right: 15px;" alt="">
+      <a href="/news/<%= news.nid %>"><p><%= news.title %></p></a>
+      <p><%= news.rdate %></p>
+      <p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= news.content %></p>
+    </li>
+    <% }) %>
+
+  </ul>
+</body>
+<script>
+  function regToggle(){
+    const regForm = document.querySelector('#regForm')
+    const display = document.querySelector('#regForm').style.display;
+    if(display === "none")
+    {regForm.style.display = "block"}
+    else
+    {regForm.style.display = "none"}
+  }
+</script>
+</html>
