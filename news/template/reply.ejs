@@ -6,10 +6,56 @@
   <title>Document</title>
 </head>
 <body>
-  <ul>
-    <% if(reply){reply.forEach((list)=>{ %>
-    <li><%= list.replyContent %></li>
-    <% })}else{console.log('nothing')} %>
+  <p>댓글</p>
+  <hr>
+  <div id="replyForm">
+    <!-- <label>성명 : </label>
+    <input type="text" name="name"><br>
+    <label>내용 : </label> -->
+    <textarea name="replyContent" id="replyContent" style="width: 90%;"></textarea><br>
+    <button type="button" id="btnRegReply" onclick="regReply('<%= newsContent.nid %>')">등록완료</button>
+  </div>
+  <div id="replyTable">
+  <ul id="replyUl">
+    
   </ul>
 </body>
+<script>
+  replyList('<%= newsContent.nid %>');
+  function replyList(nid){
+    fetch('/reply/'+nid)
+    .then(response=>response.json())
+    .then(data=>{
+      console.log(data);
+      const output = `${data.map(reply => `<li>${reply.replyContent}</li>`).join('\n')}`;
+      document.querySelector('#replyUl').innerHTML = output;
+    })
+  }
+
+  function regReply(nid){
+    const replyContent = document.querySelector('#replyContent').value;
+    fetch(`/reply`,{
+      method: "POST",
+      headers: {'content-Type' : 'application/json'},
+      body: JSON.stringify({replyContent : replyContent, nid : nid})
+    })
+    .then((response)=>{
+      if(response.status === 201){
+        window.location.reload();
+      }
+    })
+      //어차피 창을 새로고침할 때 get방식으로 fetch후 replyContent를 뿌리기때문에 굳이 두번 반복할 필요 없이 새로고침만 한다.
+      /* const output = `${data.map(reply => `<li>${reply.replyContent}</li>`).join('\n')}`;
+      document.querySelector('#replyUl').innerHTML = output; */
+      /* document.querySelector('#replyUl').innerHTML = ''
+        data.forEach(v=>{
+          document.querySelector('#replyUl').insertAdjacentHTML('beforeend',`
+          <li>${v.replyContent}</li>
+          `)
+        })
+      alert(JSON.stringify(data)) */
+    .catch(console.error)
+  }
+
+</script>
 </html>

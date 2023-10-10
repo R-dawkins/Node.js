@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  #category ul li{transition: all .3s;}
+  #category ul li:hover{
+    background: #ccc;
+  }
+</style>
+<body>
+  <div id="category">
+    <ul style="display: flex;justify-content: center;align-items: center;list-style: none;">
+      <li style="border: 1px solid black; padding: 10px 20px; width: 100px;text-align:center;"><a onclick="printList('BestSeller','1')" href="#">종합</a></li>
+      <li style="border: 1px solid black; padding: 10px 20px; width: 100px;text-align:center;"><a onclick="printList('RealTimeBestSeller','1')" href="#">실시간</a></li>
+      <li style="border: 1px solid black; padding: 10px 20px; width: 100px;text-align:center;"><a onclick="printList('DayBestSeller','1')" href="#">일별</a></li>
+      <li style="border: 1px solid black; padding: 10px 20px; width: 100px;text-align:center;"><a onclick="printList('MonthWeekBestSeller','1')" href="#">월별/주별</a></li>
+      <li style="border: 1px solid black; padding: 10px 20px; width: 100px;text-align:center;"><a onclick="printList('HotPriceBestSeller','1')" href="#">특가</a></li>
+      <li style="border: 1px solid black; padding: 10px 20px; width: 100px;text-align:center;"><a onclick="printList('SteadySeller','1')" href="#">스테디셀러</a></li>
+    </ul>
+  </div>
+  <div id="reg-section">
+    <fieldset>
+      <form action="/Register" method="post">
+        <input type="text" name="title" placeholder="국내도서 분류">
+        <input type="text" name="bname" placeholder="책 제목">
+        <input type="text" name="author" placeholder="작가">
+        <input type="text" name="translator" placeholder="역자">
+        <input type="text" name="publisher" placeholder="출판사">
+        <input type="text" name="pday" placeholder="출판일">
+        <input type="text" name="price" placeholder="가격">
+        <input type="text" name="url" placeholder="url 주소">
+        <input type="text" name="category" placeholder="카테고리">
+        <button type="submit">책 등록</button>
+      </form>
+    </fieldset>
+  </div>
+  <div id="list-section">
+  </div>
+</body>
+<script>
+function printList(category,page){
+  const url = "/"+category+"/"+page;
+  console.log(url);
+  fetch(url)
+  .then(response=>response.json())
+  .then(data=>{
+    console.log(data);
+    const output = `
+    
+    <h2 class="title">${data.title}</h2>
+    <ul style="list-style-type:none;">
+      ${data.bookList.map(list=>
+        `<li style="clear:both;">
+          <img src="${list.url}" style="width:125px;height:197px;float:left;margin-bottom:30px;margin-right:20px">
+          <h3>${list.bname}</h3>
+          <p>작가 : ${list.author} 역자 : ${list.translator} | ${list.publisher} | ${list.pday}</p>
+          <p>책 가격: ${list.price}원</p>
+          </li>`
+        ).join('\n')}
+    </ul>
+
+      `;
+      document.querySelector('#list-section').innerHTML = output;
+  })
+  /* const list = listArray.filter((list)=> category === 'best')
+  list.forEach() */
+}
+printList('BestSeller','1')
+</script>
+</html>

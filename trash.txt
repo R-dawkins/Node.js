@@ -1,0 +1,8 @@
+<% if(reply){reply.forEach((list)=>{ %>
+    <li><%= list.replyContent %></li>
+    <% })}else{console.log('nothing')} %>
+---    reply.ejs ----
+
+
+<!-- <%- include("reply",{reply}) %> -->
+content.ejs---

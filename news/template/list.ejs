@@ -23,7 +23,7 @@
     <% renderList.forEach((news)=>{ %>
     <li style="border-bottom: 1px solid #ccc;height: 100px;">
       <img src="<%= news.url %>" style="width: 100px; height: 80px; float: left;margin-right: 15px;" alt="">
-      <a href="/news/<%= news.nid %>"><p><%= news.title %></p></a>
+      <a href="/news/<%= news.nid %>"><p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= news.title %></p></a>
       <p><%= news.rdate %></p>
       <p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= news.content %></p>
     </li>

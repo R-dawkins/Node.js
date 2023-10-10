@@ -14,33 +14,12 @@
       <p style="word-break: keep-all;"><%= newsContent.content %></p>
       <br><br><br><br><br><br>
     </div>
-    <p>댓글</p>
-    <hr>
-    <div id="replyForm">
-      <!-- <label>성명 : </label>
-      <input type="text" name="name"><br>
-      <label>내용 : </label> -->
-      <textarea name="replyContent" id="replyContent" style="width: 90%;"></textarea><br>
-      <button type="button" id="btnRegReply">등록완료</button>
-    </div>
-    <div id="replyTable">
-          <%- include("reply",{reply}) %>
+
+    <%-include('reply.ejs')%>
+          
     </div>
 </body>
 <script>
-  const btnRegReply = document.querySelector('#btnRegReply');
-  btnRegReply.addEventListener('click', (e)=>{
-    const replyContent = document.querySelector('#replyContent').value
-    fetch(`/reply`,{
-      method: "POST",
-      headers: {'content-Type' : 'application/json'},
-      body: JSON.stringify({replyContent : replyContent, nid:'<%= newsContent.nid %>'},)
-    })
-    .then((result)=>{
-      if(result.status === 201){
-          window.location.reload();
-        }
-    }).catch(console.error)
-  })
+
 </script>
 </html>
