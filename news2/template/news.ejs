@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div style="width: 1200px; margin: 0 auto;">
+    <h1 style="display: block;text-align: center;">헤드라인 뉴스</h1>
+    <div style="border: 1px solid black;">
+      <h3 style="display: block;text-align: center;">뉴스 등록</h3>
+      <form method="post" action="/news/register">
+        <input style="margin:0 auto;display: block; width: 50%;" name="title" id="title" type="text" placeholder="제목">
+        <input style="margin:0 auto;display: block;margin-top:20px; width: 50%;" name="content" id="content" type="text" placeholder="내용">
+        <input style="margin:0 auto;display: block;margin-top:20px; width: 50%;" name="url" id="url" type="text" placeholder="url">
+        <button style="margin: 20px auto;display: block;width: 50px;height: 30px;" type="submit">등록</button>
+      </form>
+    </div>
+    <div>
+      <h2 style="display: block; text-align: center;">뉴스 콘텐츠</h2>
+      <div id="newsList">
+        <ul>
+          <% renderFile.forEach((news)=>{ %>
+            <li>
+              <p><%= news.num %></p>
+              <h4><a href="/news/<%= news.nid %>"><%= news.title %></a></h4>
+              <img src="<%= news.url %>" alt="" style="width: 100px; height: 100px;">
+              <p><%= news.content %></p>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+
+</script>
+</html>
