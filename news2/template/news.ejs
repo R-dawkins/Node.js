@@ -6,7 +6,7 @@
   <title>Document</title>
 </head>
 <body>
-  <div style="width: 1200px; margin: 0 auto;">
+  <div style="width: 100%; margin: 0 auto;">
     <h1 style="display: block;text-align: center;">헤드라인 뉴스</h1>
     <div style="border: 1px solid black;">
       <h3 style="display: block;text-align: center;">뉴스 등록</h3>
@@ -19,8 +19,8 @@
     </div>
     <div>
       <h2 style="display: block; text-align: center;">뉴스 콘텐츠</h2>
-      <div id="newsList">
-        <ul>
+      <div id="newsList" style="width: 1200px;margin: 0 auto;text-align: center;">
+        <ul style="list-style-type: none;margin: 0 auto;padding: 0;">
           <% renderFile.forEach((news)=>{ %>
             <li>
               <p><%= news.num %></p>

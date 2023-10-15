@@ -6,7 +6,7 @@
   <title>Document</title>
 </head>
 <body>
-  <div style="width: 1200px;margin: 0 auto;">
+  <div style="width: 100%;margin: 0 auto;">
     <h1 style="text-align: center;">뉴스 컨텐츠</h1>
     <div style="margin: 100px auto;text-align: center;">
       <% renderFile.forEach((news)=>{ %>
@@ -16,6 +16,40 @@
       <%}) %>
     </div>
   </div>
-  
+  <div id="reply-section" style="width: 100%;margin: 0 auto;">
+    <div id="reply-register" style="text-align: center;">
+      <div id="regReply">
+        <input type="text" id="nickname" name="nickname" placeholder="닉네임">
+        <input type="text" id="reply" name="reply" placeholder="댓글">
+        <button type="button" onclick="regReply()">댓글 등록</button>
+      </div>
+    </div>
+    <div id="reply-content" style="width: 1200px;margin: 0 auto;text-align: center;">
+      <ul style="list-style-type: none;">
+        <% renderReply.forEach((reply)=>{ %>
+          <li>
+            <p style="font-weight: bold;"><%= reply.nickname %></p>
+            <p><%= reply.reply %></p>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
 </body>
+<script>
+  function regReply(){
+    let nickname = document.querySelector('#nickname').value
+    let reply = document.querySelector('#reply').value
+    fetch('/news/reply/<%= renderFile[0].nid %>',{
+      method:"POST",
+      headers: {'content-Type' : 'application/json'},
+      body: JSON.stringify({nickname : nickname, reply : reply})
+    })
+    .then(response=>{
+      if(response.status = 201){
+        window.location.reload();
+      }
+    })
+  }
+</script>
 </html>

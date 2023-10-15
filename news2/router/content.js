@@ -1,5 +1,7 @@
 import express, { json, urlencoded } from 'express';
 import ejs from 'ejs';
+import { replyText } from './reply.js';
+
 const router = express.Router();
 const newsContent = [];
 router.use(express.urlencoded({extended:true}));
@@ -25,8 +27,8 @@ router
 router.get('/:nid',(req, res, next) => {
   let nid = req.params.nid
   const renderFile = newsContent.filter(list=>list.nid == nid)
-
-  ejs.renderFile('./template/content.ejs',{renderFile})
+  const renderReply = replyText.filter(list=>list.nid == nid)
+  ejs.renderFile('./template/content.ejs',{renderFile,renderReply})
   .then(data => res.end(data))
 });
 
