@@ -7,10 +7,10 @@
 </head>
 <body>
   <div style="width: 100%;margin: 0 auto;">
-    <h1 style="text-align: center;">뉴스 컨텐츠</h1>
+    <h1 style="text-align: center;">뉴스 컨텐츠 <a href="/news">메인화면으로</a></h1>
     <div style="margin: 100px auto;text-align: center;">
       <% renderFile.forEach((news)=>{ %>
-          <h2><a href="/news/<%= news.nid %>"><%= news.title %></a></h2>
+          <h2><%= news.title %></h2>
           <img src="<%= news.url %>" alt="" style="width: 200px; height: 200px;">
           <div><%= news.content %></p>
       <%}) %>
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div id="reply-content" style="width: 1200px;margin: 0 auto;text-align: center;">
-      <ul style="list-style-type: none;">
+      <ul style="list-style-type: none;padding: 0;">
         <% renderReply.forEach((reply)=>{ %>
           <li>
             <p style="font-weight: bold;"><%= reply.nickname %></p>

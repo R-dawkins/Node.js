@@ -22,7 +22,7 @@
       <div id="newsList" style="width: 1200px;margin: 0 auto;text-align: center;">
         <ul style="list-style-type: none;margin: 0 auto;padding: 0;">
           <% renderFile.forEach((news)=>{ %>
-            <li>
+            <li style="margin: 0 auto;border: 1px solid black;width: 300px;height: 250px;display: block;margin-bottom: 20px;">
               <p><%= news.num %></p>
               <h4><a href="/news/<%= news.nid %>"><%= news.title %></a></h4>
               <img src="<%= news.url %>" alt="" style="width: 100px; height: 100px;">
