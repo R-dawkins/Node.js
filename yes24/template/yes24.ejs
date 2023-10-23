@@ -25,7 +25,7 @@
   <div id="reg-section">
     <fieldset>
       <form action="/Register" method="post">
-        <input type="text" name="title" placeholder="국내도서 분류">
+        <!-- <input type="text" name="title" placeholder="국내도서 분류"> -->
         <input type="text" name="bname" placeholder="책 제목">
         <input type="text" name="author" placeholder="작가">
         <input type="text" name="translator" placeholder="역자">
@@ -33,7 +33,15 @@
         <input type="text" name="pday" placeholder="출판일">
         <input type="text" name="price" placeholder="가격">
         <input type="text" name="url" placeholder="url 주소">
-        <input type="text" name="category" placeholder="카테고리">
+        <!-- <input type="text" name="category" placeholder="카테고리"> -->
+        <select name="category" id="category">
+          <option value="BestSeller">BestSeller</option>
+          <option value="RealTimeBestSeller">RealTimeBestSeller</option>
+          <option value="DayBestSeller">DayBestSeller</option>
+          <option value="MonthWeekBestSeller">MonthWeekBestSeller</option>
+          <option value="HotPriceBestSeller">HotPriceBestSeller</option>
+          <option value="SteadySeller">SteadySeller</option>
+        </select>
         <button type="submit">책 등록</button>
       </form>
     </fieldset>
@@ -51,9 +59,9 @@ function printList(category,page){
     console.log(data);
     const output = `
     
-    <h2 class="title">${data.title}</h2>
+    <h2 class="title">${data[0].category_name}</h2>
     <ul style="list-style-type:none;">
-      ${data.bookList.map(list=>
+      ${data.map(list=>
         `<li style="clear:both;">
           <img src="${list.url}" style="width:125px;height:197px;float:left;margin-bottom:30px;margin-right:20px">
           <h3>${list.bname}</h3>

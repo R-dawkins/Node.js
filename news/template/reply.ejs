@@ -27,7 +27,7 @@
     .then(response=>response.json())
     .then(data=>{
       console.log(data);
-      const output = `${data.map(reply => `<li>${reply.replyContent}</li>`).join('\n')}`;
+      const output = `${data.map(reply => `<li> <p>등록날짜 : ${reply.redate}</p> <p>${reply.content}</p></li>`).join('\n')}`;
       document.querySelector('#replyUl').innerHTML = output;
     })
   }
@@ -37,7 +37,7 @@
     fetch(`/reply`,{
       method: "POST",
       headers: {'content-Type' : 'application/json'},
-      body: JSON.stringify({replyContent : replyContent, nid : nid})
+      body: JSON.stringify({content : replyContent, nid : nid})
     })
     .then((response)=>{
       if(response.status === 201){

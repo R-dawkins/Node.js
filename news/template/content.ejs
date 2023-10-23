@@ -6,20 +6,32 @@
   <title>News</title>
 </head>
 <body>
-    <h1>Content</h1>
-    <div style="height: auto;">
-      <h3><%= newsContent.title %> <a href="/news">메인화면으로</a></h3>
+    <h1 style="text-align: center;">Content</h1>
+    <div style="height: auto;width: 1200px;margin: 0 auto;">
+      <h3 style="text-align: center;"><%= newsContent.title %> <a href="/news">메인화면으로</a></h3>
       <img src="<%= newsContent.url %>" style="width: 290px; height: 475px;margin:0 auto;display: block;" alt="">
       <p><%= newsContent.rdate %></p>
       <p style="word-break: keep-all;"><%= newsContent.content %></p>
       <br><br><br><br><br><br>
+      <button type="button" onclick="remove('<%= newsContent.nid %>')">뉴스컨텐츠 삭제하기</button>
     </div>
 
-    <%-include('reply.ejs')%>
+    <%- include('reply.ejs')%>
           
     </div>
 </body>
 <script>
-
+function remove(nid){
+  fetch(`/news/remove`,{
+    method:"DELETE",
+    headers: {'content-Type' : 'application/json'},
+      body: JSON.stringify({nid : nid})
+    })
+  .then((result)=>{ 
+      if(result.status === 204){
+        window.location.href='http://localhost:8080/news'
+      }
+    })
+}
 </script>
 </html>

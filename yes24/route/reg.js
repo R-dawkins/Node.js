@@ -1,14 +1,28 @@
 import express from 'express';
 import { listArray } from './data.js';
+import dbConfig from '../db/database.js';
+const conn = dbConfig.init();
+dbConfig.connect(conn);
+
 const router = express.Router();
 router.use(express.urlencoded({extended:true}));
 router.use(express.json());
 router
 .post('/',(req, res, next) => {
-  const {title, bname, author, translator, publisher, pday, price, url, category} = req.body
-  const bid = Math.trunc(Math.random()*1000)
-  console.log(bid);
-  const bookObj = 
+  const {bname, author, translator, publisher, pday, price, url, category} = req.body
+  const params = [bname, author, translator, publisher, pday, price, url, category];
+  const sql = 'insert books(bname, author, translator, publisher, pday, price, url, category) values(?,?,?,?,?,?,?,?)'
+  conn.query(sql,params,(err,rows,field)=>{
+    if(err) console.log(err)
+    else{
+    console.log(params);
+    res.status(201).redirect('/BestSeller')
+    }
+  })
+
+  // const bid = Math.trunc(Math.random()*1000)
+  // console.log(bid);
+  /* const bookObj = 
   {
     bid : bid,
     category : category,
@@ -26,8 +40,6 @@ router
   const MonthBestIndex = listArray.findIndex((item) => item.title === "국내도서 월간 베스트");
   const DayBestIndex = listArray.findIndex((item) => item.title === "국내도서 일별 베스트");
   const BestSellerIndex = listArray.findIndex((item) => item.title === "국내도서 종합 베스트");
-  console.log(BestSellerIndex);
-  console.log(DayBestIndex);
   if(title === "국내도서 실시간 베스트"){
     listArray[RealBestIndex].bookList.push(bookObj)
     console.log(bookObj);
@@ -53,6 +65,7 @@ router
     console.log(bookObj);
   }
   res.redirect('/BestSeller')
-})
+  */
+}) 
 
 export default router;

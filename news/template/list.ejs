@@ -20,14 +20,16 @@
   </form>
 
   <ul style="list-style: none;">
-    <% renderList.forEach((news)=>{ %>
+    <!-- <%# renderList.forEach((news)=>{ %> -->
+    <% for(i=0;i<list.length;i++){ %>
     <li style="border-bottom: 1px solid #ccc;height: 100px;">
-      <img src="<%= news.url %>" style="width: 100px; height: 80px; float: left;margin-right: 15px;" alt="">
-      <a href="/news/<%= news.nid %>"><p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= news.title %></p></a>
-      <p><%= news.rdate %></p>
-      <p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= news.content %></p>
+      <img src="<%= list[i].url %>" style="width: 100px; height: 80px; float: left;margin-right: 15px;" alt="">
+      <a href="/news/<%= list[i].nid %>"><p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= list[i].title %></p></a>
+      <p><%= list[i].rdate %></p>
+      <p style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;"><%= list[i].content %></p>
     </li>
-    <% }) %>
+    <% } %>
+    <!-- <%# }) %> -->
 
   </ul>
 </body>

@@ -19,31 +19,32 @@
       <input type="text" name="content" id="content" style="width: 70%;" placeholder="content">
       <button type="submit">POST</button>
     </form>
-      <% renderList.forEach((tweet)=>{ %>
+      <!-- <%# list.forEach((tweet)=>{ %> -->
+      <% for(i=0; i<list.length;i++){ %>
       <div class="content" style="border: 1px solid gray;margin-top: 10px;">
-        <%= tweet.pid %>
-        <span style="float:right;cursor: pointer;" onclick="remove('<%= tweet.pid %>')">삭제❌</a></span>
-        <span style="float:right;cursor: pointer;" onclick="updateToggle('<%= tweet.pid %>')">편집✏&nbsp;&nbsp;</span>
+        <span style="float:right;cursor: pointer;" onclick="remove('<%= list[i].id %>')">삭제❌</a></span>
+        <span style="float:right;cursor: pointer;" onclick="updateToggle('<%= list[i].id %>')">편집✏&nbsp;&nbsp;</span>
         <img style="clear:both" src="https://lh3.googleusercontent.com/ogw/AKPQZvygLVnCYOdxNAsd7dGjdJN5XwF770wmOLwyTvUOgw=s32-c-mo" alt="">
-        <span>[<%= tweet.name %>]</span>
-        <span><a href="/dwitter/<%= tweet.id %>">@<%= tweet.id %></a></span>
-        <span><%= tweet.date %></span>
+        <span>[<%= list[i].name %>]</span>
+        <span><a href="/dwitter/<%= list[i].id %>">@<%= list[i].id %></a></span>
+        <span><%= list[i].date %></span>
         <div>
-          <%= tweet.content %>
+          <%= list[i].content %>
         </div>
-        <div id="updateForm_<%= tweet.pid %>" style="display: none;">
-          <input type="text" id="content_<%= tweet.pid %>" style="width: 80%;background:rgb(200, 231, 241);">
-          <button type="button" id="btnUpdate" onclick="update('<%= tweet.pid %>')">Update</button>
+        <div id="updateForm_<%= list[i].id %>" style="display: none;">
+          <input type="text" id="content_<%= list[i].id %>" style="width: 80%;background:rgb(200, 231, 241);">
+          <button type="button" id="btnUpdate" onclick="update('<%= list[i].id %>')">Update</button>
         </div>
       </div>
-      <% }) %>
+      <% } %>
+      <!-- <%# }) %> -->
   </main>
 
   <script>
-    function updateToggle(pid){//pid값을 parameter로 가져오는것 매우중요
-      const updateForm = document.querySelector(`#updateForm_${pid}`)
+    function updateToggle(id){//id값을 parameter로 가져오는것 매우중요
+      const updateForm = document.querySelector(`#updateForm_${id}`)
       const display = updateForm.style.display;
-      const contentText = document.querySelector(`#content_${pid}`)
+      const contentText = document.querySelector(`#content_${id}`)
       // updateForm.classList.toggle('active')
       if(display === "none")
       {
@@ -57,13 +58,13 @@
     }
     // updateToggle
 
-    function update(pid){
-      const updateText = document.querySelector(`#content_${pid}`).value;
+    function update(id){
+      const updateText = document.querySelector(`#content_${id}`).value;
       fetch('/dwitter', //매우중요 ****************************
       {
         method :'PUT',
         headers : {'content-Type': 'application/json'},
-        body : JSON.stringify({pid : pid, content : updateText})//json타입이기때문에 {}로 감싼다
+        body : JSON.stringify({id : id, content : updateText})//json타입이기때문에 {}로 감싼다
       })
       .then((result)=>{
         if(result.status === 204)
@@ -75,16 +76,17 @@
     }
     //update
 
-    function remove(pid){
+    function remove(id){
       fetch('/dwitter',
       {
         method : 'DELETE',
         headers : {'content-Type' : 'application/json'},
-        body : JSON.stringify({pid : pid})
+        body : JSON.stringify({id : id})
       })
       .then((result)=>{
         if(result.status === 204){
           window.location.reload();
+          console.log('delete success!')
         }
       })
       .catch(console.error)
