@@ -17,37 +17,45 @@ export async function getBooks(req,res){
 
 
 export async function getPages(req,res){
-
+  const rows = await yes24Repository.getBooks();
+  res.json(rows)
 }
 
 
 export async function removeBooks(req,res){
-
+  const bid = req.body.bid
+  const result = await yes24Repository.removeBooks(bid);
+  if(result === 'success') res.status(204).send('delete success');
 }
 
 
 export async function getDaybestBooks(req,res){
-
+  const rows = await yes24Repository.getDaybestBooks();
+  res.json(rows)
 }
 
 
 export async function getHotbestBooks(req,res){
-
+  const rows = await yes24Repository.getHotbestBooks();
+  res.json(rows)
 }
 
 
 export async function getMonthbestBooks(req,res){
-
+  const rows = await yes24Repository.getMonthbestBooks();
+  res.json(rows)
 }
 
 
 export async function getRealbestBooks(req,res){
-
+  const rows = await yes24Repository.getRealbestBooks();
+  res.json(rows)
 }
 
 
 export async function getSteadybestBooks(req,res){
-
-}
+  const rows = await yes24Repository.getSteadybestBooks();
+  res.json(rows)
+} 
 
 
