@@ -1,5 +1,5 @@
 import express from 'express';
-import { listArray } from './data.js';
+import * as yes24Controller from '../controller/yes24Controller.js'
 import dbConfig from '../db/database.js';
 const conn = dbConfig.init();
 dbConfig.connect(conn);
@@ -7,18 +7,11 @@ dbConfig.connect(conn);
 const router = express.Router();
 router.use(express.urlencoded({extended:true}));
 router.use(express.json());
-router
-.post('/',(req, res, next) => {
-  const {bname, author, translator, publisher, pday, price, url, category} = req.body
-  const params = [bname, author, translator, publisher, pday, price, url, category];
-  const sql = 'insert books(bname, author, translator, publisher, pday, price, url, category) values(?,?,?,?,?,?,?,?)'
-  conn.query(sql,params,(err,rows,field)=>{
-    if(err) console.log(err)
-    else{
-    console.log(params);
-    res.status(201).redirect('/BestSeller')
-    }
-  })
+
+//
+router.post('/', yes24Controller.postBooks);
+//
+  
 
   // const bid = Math.trunc(Math.random()*1000)
   // console.log(bid);
@@ -66,6 +59,5 @@ router
   }
   res.redirect('/BestSeller')
   */
-}) 
 
 export default router;

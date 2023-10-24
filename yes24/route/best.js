@@ -1,6 +1,5 @@
 import express from 'express';
 import ejs from 'ejs';
-import { listArray } from './data.js';
 import dbConfig from '../db/database.js';
 const conn = dbConfig.init();
 dbConfig.connect(conn);
