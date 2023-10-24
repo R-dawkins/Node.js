@@ -52,19 +52,16 @@
 <script>
 function printList(category,page){
   const url = "/"+category+"/"+page;
-  console.log(url);
   fetch(url)
   .then(response=>response.json())
   .then(data=>{
-    console.log(data);
     const output = `
-    
     <h2 class="title">${data[0].category_name}</h2>
     <ul style="list-style-type:none;">
       ${data.map(list=>
         `<li style="clear:both;">
           <img src="${list.url}" style="width:125px;height:197px;float:left;margin-bottom:30px;margin-right:20px">
-          <h3>${list.bname}</h3>
+          <h3>${list.bname} <a style="cursor:pointer;" onclick="remove(${list.bid})">❌</a></h3>
           <p>작가 : ${list.author} 역자 : ${list.translator} | ${list.publisher} | ${list.pday}</p>
           <p>책 가격: ${list.price}원</p>
           </li>`
@@ -78,5 +75,18 @@ function printList(category,page){
   list.forEach() */
 }
 printList('BestSeller','1')
+
+function remove(bid){
+  fetch(`/BestSeller/delete`,{
+    method:"DELETE",
+    headers: {'content-Type' : 'application/json'},
+    body: JSON.stringify({bid : bid})
+    })
+  .then((result)=>{ 
+      if(result.status === 204){
+        window.location.href='http://localhost:8080/BestSeller'
+      }
+    })
+}
 </script>
 </html>

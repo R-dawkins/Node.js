@@ -27,7 +27,7 @@
     .then(response=>response.json())
     .then(data=>{
       console.log(data);
-      const output = `${data.map(reply => `<li> <p>등록날짜 : ${reply.redate}</p> <p>${reply.content}</p></li>`).join('\n')}`;
+      const output = `${data.map(reply => `<li> <p>등록날짜 : ${reply.redate}</p> <p>${reply.content}</p> <a style="cursor:pointer;" onclick="removeRep(<%= newsContent.nid %>,${reply.rid})">❌</a></li>`).join('\n')}`;
       document.querySelector('#replyUl').innerHTML = output;
     })
   }
@@ -57,5 +57,17 @@
     .catch(console.error)
   }
 
+  function removeRep(nid,rid){
+    fetch('/reply/remove',{
+      method: "delete",
+      headers: {'content-Type' : 'application/json'},
+      body: JSON.stringify({nid:nid,rid:rid})
+    })
+    .then((response)=>{
+      if(response.status === 204){
+        window.location.reload();
+      }
+    })
+  }
 </script>
 </html>

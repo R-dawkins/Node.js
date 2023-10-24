@@ -36,6 +36,16 @@ router.post('/',(req, res, next) => {
 // replyList.shift({nid,content}); /* 배열의 첫번째 요소를 삭제하고 그 요소를 반환 */
 })
 
-
+router.delete('/remove',(req, res, next) => {
+  const {nid,rid} = req.body;
+  const sql = 'delete from news_reply where nid=? and rid =?'
+  const params = [nid,rid];
+  conn.query(sql,params,(err)=>{
+    if(err) console.log(err)
+    else{
+      res.status(204).send('delete success')
+    }
+  })
+})
 
 export default router

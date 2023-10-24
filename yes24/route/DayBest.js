@@ -8,7 +8,7 @@ router.use(express.urlencoded({extended:true}));
 router.use(express.json());
 
 router.get('/:page',(req, res, next) => {
-  const sql = "select category_name,url,bname,author,translator,publisher,pday,format(price,0) price from books b inner join book_category c on b.category = c.category where b.category='DayBestSeller'"
+  const sql = "select bid,category_name,url,bname,author,translator,publisher,pday,format(price,0) price from books b inner join book_category c on b.category = c.category where b.category='DayBestSeller'"
   conn.query(sql,(err,rows,field)=>{
     res.json(rows)
   })
