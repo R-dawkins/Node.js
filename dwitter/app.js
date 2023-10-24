@@ -1,5 +1,5 @@
 import express from 'express';
-import dwitterRouter from './route/dwitter.js'
+import dwitterRouter from './route/dwitterRouter.js'
 const app = express();
 
 app.use('/dwitter',dwitterRouter)
