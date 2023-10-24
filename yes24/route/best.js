@@ -11,7 +11,7 @@ router.use(express.json());
 
 router.get('/',(req, res, next) => {
   // const list = listArray.filter((list)=> list.category === 'best')
-  const sql = "select category_name,url,bname,author,translator,publisher,pday,price from books b inner join book_category c on b.category = c.category where b.category='BestSeller'"
+  const sql = "select category_name,url,bname,author,translator,publisher,pday,format(price,0) price from books b inner join book_category c on b.category = c.category where b.category='BestSeller'"
   conn.query(sql,(err,rows,field)=>{
     
     ejs.renderFile('./template/yes24.ejs',{list:rows})
@@ -20,7 +20,7 @@ router.get('/',(req, res, next) => {
 })
 router.get('/:page',(req, res, next) => {
   // console.log(listArray);
-  const sql = "select category_name,url,bname,author,translator,publisher,pday,price from books b inner join book_category c on b.category = c.category where b.category='BestSeller'"
+  const sql = "select category_name,url,bname,author,translator,publisher,pday,format(price,0) price from books b inner join book_category c on b.category = c.category where b.category='BestSeller'"
   conn.query(sql,(err,rows,field)=>{
     res.json(rows)
   })
