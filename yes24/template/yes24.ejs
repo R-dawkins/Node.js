@@ -62,7 +62,7 @@ function printList(category,page){
         `<li style="clear:both;">
           <img src="${list.url}" style="width:125px;height:197px;float:left;margin-bottom:30px;margin-right:20px">
           <h3>${list.bname} <a style="cursor:pointer;" onclick="remove(${list.bid})">❌</a></h3>
-          <p>작가 : ${list.author} 역자 : ${list.translator} | ${list.publisher} | ${list.pday}</p>
+          <p>작가 : ${list.author} | 역자 : ${list.translator == "" ? '없음' : list.translator} | ${list.publisher} | ${list.pday}</p>
           <p>책 가격: ${list.price}원</p>
           </li>`
         ).join('\n')}

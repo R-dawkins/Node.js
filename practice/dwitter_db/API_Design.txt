@@ -1,0 +1,7 @@
+
+1. GET: /dwitter - All Dwitter List
+2. POST: /dwitter - tweet create
+3. GET: /dwitter?id=자신의아이디  - My Dwitter List
+   GET: /dwitter/:id
+4. PUT: /dwitter/:id - My Dwitter update
+5. DELETE: /dwitter/:id - My Dwitter delete 

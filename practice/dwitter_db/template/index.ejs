@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dwitter</title>
+</head>
+<body>
+  <h1>Dwitter</h1>
+  <ul>
+    <li><a href="/dwitter">All Dwitter</a></li>
+    <li><a href="#">My Dwitter</a></li>
+    <li><a href="#">Login</a></li>
+  </ul>
+
+  <form name="contentForm" action="/dwitter" method="post" 
+                    style="border:2px solid gray">
+    <input type="text" name="id" placeholder="id">                    
+    <input type="text" name="name" placeholder="name">                    
+    <input type="text" name="content"  placeholder="content" style="width:70%;">
+    <button type="submit">Post</button>
+  </form>
+
+  <% for(let i=0; i<list.length;i++ ){ %> 
+  <div style="border:1px solid gray;margin-top:10px;">
+    <span style="float:right;cursor:pointer;" onclick="remove('<%= list[i].id %>')">삭제</span>
+    <span style="float:right;cursor:pointer;" onclick="updateToggle('<%= list[i].id %>')">편집&nbsp;&nbsp;</span>
+    <img style="clear:both;" src="https://lh3.googleusercontent.com/ogw/AKPQZvxTD3_VZUKbr8jRW4O06lcHbznUkvGeVrrzGVl_=s32-c-mo">
+    <span>[<%= list[i].name %>]</span>
+    <span><a href="/dwitter/<%= list[i].id %>">@<%= list[i].id %></a></span>
+    <span><%= list[i].date %></span>
+    <div>
+      <%= list[i].content %>
+    </div>
+    <div id="updateForm_<%= list[i].id %>" style="display:none;">
+       <input type="text" id="content_<%= list[i].id %>" style="width:80%;background:lightcyan;">
+       <button type="button" onclick="update('<%= list[i].id %>')">Update</button>  
+    </div>
+  </div>
+  <% } %>
+ 
+  
+  <script>
+    /**
+     * Remove
+     * */
+    function remove(id){
+      fetch('/dwitter',
+            { 
+              method : 'delete',
+              headers : {'content-type': 'application/json'},
+              body : JSON.stringify({id : id})
+            }
+            )
+      .then((result) => {
+          if(result.status === 204){
+            alert("삭제 성공!");
+            window.location.reload();
+          }
+      })
+      .catch(console.error);
+
+    }
+
+    /**
+     * Update
+     * */
+    function update(id){
+      const updateText = document.querySelector("#content_"+id).value;
+      fetch('/dwitter',
+            { 
+              method : 'put',
+              headers : {'content-type': 'application/json'},
+              body : JSON.stringify({id : id, content : updateText})
+            }
+            )
+      .then((result) => {
+          if(result.status === 204){
+            // alert("업데이트 성공!");
+            window.location.reload();
+          }
+      })
+      .catch(console.error);
+      
+    }
+
+    /**
+     * Update Toggle
+     * */
+    function updateToggle(pid){
+      const updateForm = document.querySelector("#updateForm_"+pid);
+      const contentText = document.querySelector("#content_"+pid);
+      const display = updateForm.style.display;
+
+      if(display === "none"){
+        updateForm.style.display = "block";
+        contentText.focus();
+      }else{
+        updateForm.style.display = "none";
+        contentText.value = "";
+      }
+    }
+  </script>
+</body>
+</html>
