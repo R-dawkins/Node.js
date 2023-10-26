@@ -23,7 +23,19 @@ export async function getOrder(req,res){
   res.json(rows);
 }
 
+export async function getSales(req,res){
+  const rows = await ManagementReopository.getSales()
+  res.json(rows);
+}
+
+export async function getSelling(req,res){
+  const rows = await ManagementReopository.getSelling()
+  res.json(rows);
+}
+
 export async function getProduct(req,res){
   const rows = await ManagementReopository.getProduct()
   res.json(rows);
 }
+
+

@@ -1,185 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        div, ul {
-            margin:0; padding:0;
-        }
-        div.ySchTab ul li.on {
-            width:150px;
-            list-style-type : none;
-            border:1px solid #333;
-            float:left;
-            text-align:center;
-            padding : 15px 0;
-        }
-        h2.title { clear: both; padding:30px 0;}
-        li.on:hover {
-            background-color: lightgray;
-            font-weight: bold;
-            cursor : pointer;
-        }
-        #list{
-            clear: both;
-        }
-				table tbody td{
-					border: 1px solid #c9c9c9;
-				}
-				table{
-					border-collapse: collapse;
-					text-align: center;
-				}
-				table thead th{
-					border: 1px solid #c9c9c9;
-				}
-    </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		div,
+		ul {
+			margin: 0;
+			padding: 0;
+		}
+
+		div.ySchTab ul li.on {
+			width: 150px;
+			list-style-type: none;
+			border: 1px solid #333;
+			float: left;
+			text-align: center;
+			padding: 15px 0;
+		}
+
+		h2.title {
+			clear: both;
+			padding: 30px 0;
+		}
+
+		li.on:hover {
+			background-color: lightgray;
+			font-weight: bold;
+			cursor: pointer;
+		}
+
+		#list {
+			clear: both;
+		}
+
+		table tbody td {
+			border: 1px solid #c9c9c9;
+		}
+
+		table {
+			border-collapse: collapse;
+			text-align: center;
+		}
+
+		table thead th {
+			border: 1px solid #c9c9c9;
+		}
+	</style>
 </head>
+<select name="" id="">
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+	<option value=""></option>
+</select>
 <body>
-    <div class="ySchTab">
-        <div class="yesTab_nor yesTab_black b_size">
-            <ul>
-                <li class="on" onclick="CallCustomerPage('customerManagement','1')"><span class="txt">고객관리</span></li>
-                <li class="on"  onclick="CallEmployeePage('employeeManagement','1')"><span class="txt">사원관리<em class="ico_newSup"></em></span></li>
-                <li class="on" onclick="CallProductPage('productManagement','1')"><span class="txt">상품관리</span></li>
-                <li class="on"  onclick="CallOrderPage('orderManagement','1')"><span class="txt">주문관리</span></li>
-                <li class="on"  onclick="CallManagementPage('sellingManagement','1')"><span class="txt">판매관리</span></li>
-                <li class="on"  onclick="CallManagementPage('salesManagement','1')"><span class="txt">매출관리</span></li>
-            </ul>
-        </div>
-    </div>
-    <div id="list">
-		<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
-			<thead>
-				<th>번호</th>
-				<th>이름</th>
-				<th>아이디</th>
-				<th>지역</th>
-				<th>성별</th>
-				<th>이메일</th>
-				<th>휴대전화</th>
-				<th>포인트</th>
-				<th>생일</th>
-				<th>등록일</th>
-			</thead>
-			<tbody id="tbody">
-	
-			</tbody>
-		</table>
+	<div class="ySchTab">
+		<div class="yesTab_nor yesTab_black b_size">
+			<ul>
+				<li class="on" onclick="CallCustomerPage('customerManagement','1')"><span class="txt">고객관리</span></li>
+				<li class="on" onclick="CallEmployeePage('employeeManagement','1')"><span class="txt">사원관리<em
+							class="ico_newSup"></em></span></li>
+				<li class="on" onclick="CallProductPage('productManagement','1')"><span class="txt">상품관리</span></li>
+				<li class="on" onclick="CallOrderPage('orderManagement','1')"><span class="txt">주문관리</span></li>
+				<li class="on" onclick="CallSellingPage('sellingManagement','1')"><span class="txt">판매관리</span></li>
+				<li class="on" onclick="CallSalesPage('salesManagement','1')"><span class="txt">매출관리</span></li>
+			</ul>
 		</div>
+	</div>
+	<div id="list">
+
+	</div>
 
 	<script>
-	CallCustomerPage('customerManagement','1');
-	function CallCustomerPage(categoryName, page){
-		const url = "/"+categoryName+"/"+page;
-		fetch(url)
-		.then(response => response.json())
-		.then((data) => {
-			console.log(data);
-			const output = `
-					${data.map(list=>
-					`
-						<tr>
+		CallCustomerPage('customerManagement', '1');
+		function CallCustomerPage(categoryName, page) {
+			const url = "/" + categoryName + "/" + page;
+			fetch(url)
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>번호</th>
+						<th>이름</th>
+						<th>아이디</th>
+						<th>지역</th>
+						<th>성별</th>
+						<th>이메일</th>
+						<th>휴대전화</th>
+						<th>포인트</th>
+						<th>생일</th>
+						<th>등록일</th>
+						</thead>
+						<tbody id="tbody">
+						${data.map(list =>
+						`
+							<tr>
+								<td>${list.rownum}</td>
+								<td>${list.customer_name}</td>
+								<td>${list.customer_id}</td>
+								<td>${list.city}</td>
+								<td>${list.gender == 'M' ? '남자' : '여자'}</td>
+								<td>${list.email}</td>
+								<td>${list.phone}</td>
+								<td>${list.point === null ? '0' : list.point}</td>
+								<td>${list.birth_date}</td>
+								<td>${list.register_date}</td>
+							</tr>
+						`).join('\n')}
+						</tbody>
+					</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})  //then
+				.catch()
+		}
+
+		function CallEmployeePage(categoryName, page) {
+			const url = "/" + categoryName + "/" + page;
+			fetch(url)
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>번호</th>
+						<th>이름</th>
+						<th>아이디</th>
+						<th>성별</th>
+						<th>이메일</th>
+						<th>휴대전화</th>
+						<th>입사일</th>
+						<th>퇴사일</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.rownum}</td>
+						<td>${list.employee_name}</td>
+						<td>${list.employee_id}</td>
+						<td>${list.gender == 'M' ? '남자' : '여자'}</td>
+						<td>${list.email}</td>
+						<td>${list.phone}</td>
+						<td>${list.hire_date}</td>
+						<td>${list.retire_date === null ? '근무중' : list.retire_date}</td>
+					</tr>
+					`).join('\n')}
+					</tbody>
+				</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+		}
+
+		function CallProductPage(categoryName, page) {
+			const url = "/" + categoryName + "/" + page;
+			fetch(url)
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>번호</th>
+						<th>상품명</th>
+						<th>아이디</th>
+						<th>범주</th>
+						<th>범주아이디</th>
+						<th>하위범주</th>
+						<th>하위범주아이디</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
 							<td>${list.rownum}</td>
+							<td>${list.product_name}</td>
+							<td>${list.product_id}</td>
+							<td>${list.category_name}</td>
+							<td>${list.category_id}</td>
+							<td>${list.sub_category_name}</td>
+							<td>${list.sub_category_id}</td>
+					</tr>
+					`).join('\n')}
+					</tbody>
+				</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+		}
+
+		function CallOrderPage(categoryName, page) {
+			const url = "/" + categoryName + "/" + page;
+			fetch(url)
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>주문 날짜</th>
+						<th>주문 아이디</th>
+						<th>주문 고객</th>
+						<th>담당 직원</th>
+						<th>소계</th>
+						<th>배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+							<td>${list.order_date}</td>
+							<td>${list.order_id}</td>
 							<td>${list.customer_name}</td>
-							<td>${list.customer_id}</td>
-							<td>${list.city}</td>
-							<td>${list.gender == 'M' ? '남자' : '여자'}</td>
-							<td>${list.email}</td>
-							<td>${list.phone}</td>
-							<td>${list.point === null ? '0' : list.point}</td>
-							<td>${list.birth_date}</td>
-							<td>${list.register_date}</td>
-						</tr>
+							<td>${list.employee_name}</td>
+							<td>${list.sub_total}원</td>
+							<td>${list.delivery_fee}원</td>
+							<td>${list.total_due}원</td>
+					</tr>
 					`).join('\n')}
+					</tbody>
+				</table>
 				`;
-			console.log(output);
-			document.querySelector("#tbody").innerHTML = output;
-		})  //then
-		.catch()
-	}
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+		}
 
-	function CallEmployeePage(categoryName, page){
-		const url = "/"+categoryName+"/"+page;
-		fetch(url)
-		.then(response => response.json())
-		.then((data)=>{
-			const output = `
-				<ul style="display:block;clear:both;margin-top:20px;">
-					${data.map(list=>
-					`
-					<li style="display:block;clearmargin-top:20px;">
-							<p>번호 : ${list.rownum}</p>
-							<p>이름 : ${list.employee_name}</p>
-							<p>아이디 : ${list.employee_id}</p>
-							<p>성별 : ${list.gender == 'M' ? '남자' : '여자'}</p>
-							<p>이메일 : ${list.email}</p>
-							<p>휴대전화 : ${list.phone}</p>
-							<p>입사일 : ${list.hire_date}</p>
-							<p>퇴사일 : ${list.retire_date === null ? '근무중' : list.retire_date}</p>
-					</li>
-					<hr>
+		function CallSalesPage(categoryName, page) {
+			const url = "/" + categoryName + "/" + page;
+			fetch(url)
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<form>
+						
+					</form>
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>주문 년도</th>
+						<th>주문 금액</th>
+						<th>총 배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.order_date}년</td>
+						<td>${list.sub_total}원</td>
+						<td>${list.delivery_fee}원</td>
+						<td>${list.total_due}원</td>
+					</tr>
 					`).join('\n')}
-				</ul>
+					</tbody>
+				</table>
 				`;
-				document.querySelector("#list").innerHTML = output;
-		})
-		.catch()
-	}
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+		}
 
-	function CallProductPage(categoryName, page){
-		const url = "/"+categoryName+"/"+page;
-		fetch(url)
-		.then(response => response.json())
-		.then((data)=>{
-			const output = `
-				<ul style="display:block;clear:both;margin-top:20px;">
-					${data.map(list=>
-					`
-					<li style="display:block;clearmargin-top:20px;">
-							<p>번호 : ${list.rownum}</p>
-							<p>상품명 : ${list.product_name}</p>
-							<p>아이디 : ${list.product_id}</p>
-							<p>범주 : ${list.category_name}</p>
-							<p>범주아이디 : ${list.category_id}</p>
-							<p>하위범주 : ${list.sub_category_name}</p>
-							<p>하위범주아이디 : ${list.sub_category_id}</p>
-					</li>
-					<hr>
+		function CallSellingPage(categoryName, page){
+			const url = "/" + categoryName + "/" + page;
+			fetch(url)
+				.then(response => response.json())
+				.then((data) => {
+					console.log(data);
+					const output = `
+					<form>
+						
+					</form>
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>번호</th>
+						<th>상품 이름</th>
+						<th>주문 수량</th>
+						<th>개당 가격</th>
+						<th>할인 가격</th>
+						<th>2018년 주문 가격</th>
+						<th>소계</th>
+						<th>배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.rownum}</td>
+						<td>${list.product_name}</td>
+						<td>${list.order_qty}개</td>
+						<td>${list.unit_price}원</td>
+						<td>${list.discount}원</td>
+						<td>${list.line_total}원</td>
+						<td>${list.sub_total}원</td>
+						<td>${list.delivery_fee}원</td>
+						<td>${list.total_due}원</td>
+					</tr>
 					`).join('\n')}
-				</ul>
+					</tbody>
+				</table>
 				`;
-				document.querySelector("#list").innerHTML = output;
-		})
-		.catch()
-	}
-
-	function CallOrderPage(categoryName, page){
-		const url = "/"+categoryName+"/"+page;
-		fetch(url)
-		.then(response => response.json())
-		.then((data)=>{
-			const output = `
-				<ul style="display:block;clear:both;margin-top:20px;">
-					${data.map(list=>
-					`
-					<li style="display:block;clearmargin-top:20px;">
-							<p>주문 년도 : ${list.order_date}년</p>
-							<p>주문 금액 : ${list.sub_total}원</p>
-							<p>총 배달비 : ${list.delivery_fee}원</p>
-							<p>총계 : ${list.total_due}원</p>
-					</li>
-					<hr>
-					`).join('\n')}
-				</ul>
-				`;
-				document.querySelector("#list").innerHTML = output;
-		})
-		.catch()
-	}
-</script>
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+		}
+	</script>
 
 </body>
+
 </html>

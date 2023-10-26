@@ -10,9 +10,26 @@
   <ul>
     <li><a href="/dwitter">All Tweets</a></li>
     <li><a href="#">My Tweets</a></li>
-    <li><a href="#">Login</a></li>
+    <li><a href="#" onclick="loginToggle()">Login</a>
+      / <a href="#" onclick="SignUpToggle()">Sign Up</a>
+    </li>
   </ul>
+  <form action="/login" id="loginForm" name="loginForm" method="post" style="margin-bottom: 40px;display: none;">
+    <p>login Form</p>
+    <input type="text" name="id" id="id" placeholder="아이디입력" style="width: 50%;background: lightcyan;">
+    <input type="password" name="pass" id="pass" placeholder="비밀번호입력" style="width: 50%;background: lightcyan;">
+    <button type="submit">로그인</button>
+  </form>
+  <form action="/signup" id="signupForm" name="signupForm" method="post" style="margin-top: 40px;display: none;">
+    <p>Sign Up Form</p>
+    <input type="text" name="id" id="idSign" placeholder="아이디입력" style="width: 50%;background: lightcoral;">
+    <input type="text" name="name" id="nameSign" placeholder="이름입력" style="width: 50%;background: lightcoral;">
+    <input type="text" name="content" id="contentSign" placeholder="내용입력" style="width: 50%;background: lightcoral;">
+    <input type="password" name="password" id="passSign" placeholder="비밀번호입력" style="width: 50%;background: lightcoral;">
+    <button type="submit">가입</button>
+  </form>
   <main>
+    <h3>Dwit 등록</h3>
     <form action="/dwitter" method="post" name="contentForm" style="border:2px solid gray" >
       <input type="text" name="id" placeholder="id">
       <input type="text" name="name" placeholder="name">
@@ -41,6 +58,27 @@
   </main>
 
   <script>
+    function SignUpToggle(){
+    const signupForm = document.querySelector(`#signupForm`)
+    const display = signupForm.style.display;
+    const idInput = document.querySelector('#idSign')
+    const passInput = document.querySelector('#passSign')
+    const nameInput = document.querySelector('#nameSign')
+    const contentInput = document.querySelector('#contentSign')
+    if(display === "none")
+    {
+      signupForm.style.display="block"
+      idInput.focus()
+    }
+    else{
+      signupForm.style.display="none"
+      idInput.value = "";
+      passInput.value = "";
+      nameInput.value = "";
+      contentInput.value = "";
+    }
+    }
+
     function updateToggle(id){//id값을 parameter로 가져오는것 매우중요
       const updateForm = document.querySelector(`#updateForm_${id}`)
       const display = updateForm.style.display;
@@ -57,7 +95,22 @@
       }
     }
     // updateToggle
-
+    function loginToggle(){
+    const loginForm = document.querySelector(`#loginForm`)
+    const display = loginForm.style.display;
+    const idInput = document.querySelector('#id')
+    const passInput = document.querySelector('#pass')
+    if(display === "none")
+    {
+      loginForm.style.display="block"
+      idInput.focus()
+    }
+    else{
+      loginForm.style.display="none"
+      idInput.value = "";
+      passInput.value = "";
+    }
+}
     function update(id){
       const updateText = document.querySelector(`#content_${id}`).value;
       fetch('/dwitter', //매우중요 ****************************
@@ -91,6 +144,7 @@
       })
       .catch(console.error)
     }
+
   </script>
 </body>
 </html>

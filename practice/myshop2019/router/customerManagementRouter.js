@@ -1,5 +1,5 @@
 import express, { json, urlencoded } from 'express';
-import * as ManagementController from './controller/ManagementController.js'
+import * as ManagementController from '../controller/ManagementController.js'
 const router = express.Router();
 router.use(express.urlencoded({extended:true}))
 router.use(express.json());
