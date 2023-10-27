@@ -50,12 +50,6 @@
 		}
 	</style>
 </head>
-<select name="" id="">
-	<option value=""></option>
-	<option value=""></option>
-	<option value=""></option>
-	<option value=""></option>
-</select>
 <body>
 	<div class="ySchTab">
 		<div class="yesTab_nor yesTab_black b_size">
@@ -69,6 +63,11 @@
 				<li class="on" onclick="CallSalesPage('salesManagement','1')"><span class="txt">매출관리</span></li>
 			</ul>
 		</div>
+	</div>
+	<br>
+	<br>
+	<div id="form">
+
 	</div>
 	<div id="list">
 
@@ -117,6 +116,7 @@
 					document.querySelector("#list").innerHTML = output;
 				})  //then
 				.catch()
+				document.querySelector("#form").innerHTML =''
 		}
 
 		function CallEmployeePage(categoryName, page) {
@@ -125,6 +125,7 @@
 				.then(response => response.json())
 				.then((data) => {
 					const output = `
+					<h4><a onclick="createForm()">Employee Register</a></h4>
 					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
 						<thead>
 						<th>번호</th>
@@ -147,7 +148,7 @@
 						<td>${list.email}</td>
 						<td>${list.phone}</td>
 						<td>${list.hire_date}</td>
-						<td>${list.retire_date === null ? '근무중' : list.retire_date}</td>
+						<td>${list.retire_date === null ? `<a style='cursor:pointer;' onclick="remove('${list.employee_id}')">퇴사시키기</a>` : list.retire_date}</td>
 					</tr>
 					`).join('\n')}
 					</tbody>
@@ -193,6 +194,7 @@
 					document.querySelector("#list").innerHTML = output;
 				})
 				.catch()
+				document.querySelector("#form").innerHTML = ''
 		}
 
 		function CallOrderPage(categoryName, page) {
@@ -230,6 +232,7 @@
 					document.querySelector("#list").innerHTML = output;
 				})
 				.catch()
+				document.querySelector("#form").innerHTML = ''
 		}
 
 		function CallSalesPage(categoryName, page) {
@@ -264,6 +267,7 @@
 					document.querySelector("#list").innerHTML = output;
 				})
 				.catch()
+				document.querySelector("#form").innerHTML = ''
 		}
 
 		function CallSellingPage(categoryName, page){
@@ -309,6 +313,53 @@
 					document.querySelector("#list").innerHTML = output;
 				})
 				.catch()
+				document.querySelector("#form").innerHTML = ''
+		}
+
+		function createForm(){
+			const output = `
+			<div style="display:block">
+					<h4><a onclick="displayToggle('employeeForm')">직원 등록 창 토글</a></h4>
+					<form action="/employeemanagement/employeeReg" id="employeeForm" name="employeeForm" method="post" style="margin-top: 40px;display:none;">
+						<p>Employee Register Form</p>
+						<input type="text" name="name" id="name" placeholder="이름입력" style="width: 50%;background: lightcoral;">
+						<select style="display:block;width:400px" name="gender" id="gender">
+							<option value="M">남자</option>
+							<option value="F">여자</option>
+						</select>
+						<input type="text" name="email" id="email" placeholder="이메일 양식 : abc@naver.com" style="width: 50%;background: lightcoral;">
+						<input type="text" name="phone" id="phone" placeholder="휴대폰 양식 : 010-1234-5678" style="width: 50%;background: lightcoral;">
+						<button style="display:block;width:100px;margin-top:10px;" type="submit">고용하기</button>
+					</form>
+			</div>
+			`;
+			document.querySelector("#form").innerHTML = output;
+		}
+		function displayToggle(id){
+    const displayForm = document.querySelector(`#${id}`)
+    const display = displayForm.style.display;
+    if(display === "none")
+    {
+      displayForm.style.display="block"
+    }
+    else{
+      displayForm.style.display="none"
+    }
+    }
+
+		function remove(id){
+			fetch('/employeemanagement/remove',{
+				method:"delete",
+				headers:{"content-type":"application/json"},
+				body: JSON.stringify({id:id})
+			})
+			.then((result)=>{
+				if(result.status === 204){
+					window.location.reload();
+				}else{
+					console.error
+				}
+			})
 		}
 	</script>
 

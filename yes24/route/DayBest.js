@@ -6,6 +6,6 @@ router.use(express.urlencoded({extended:true}));
 router.use(express.json());
 
 //
-router.get('/:page', yes24Controller.getDaybestBooks);
+router.get('/:category', yes24Controller.getPages);
 
 export default router;

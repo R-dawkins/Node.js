@@ -5,6 +5,5 @@ const router = express.Router();
 router.use(express.urlencoded({extended:true}));
 router.use(express.json());
 //
-router.get('/:page', yes24Controller.getMonthbestBooks);
-
+router.get('/:category', yes24Controller.getPages);
 export default router;

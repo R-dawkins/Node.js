@@ -30,7 +30,7 @@ export async function getCustomerPage(){
 
 export async function getEmployee(){
   return db
-    .execute('select row_number() over(order by employee_id) rownum,employee_id,employee_name,gender,phone,email,left(hire_date,10) hire_date,left(retire_date,10) retire_date from employee')
+    .execute('select row_number() over(order by employee_id) rownum,employee_id,employee_name,gender,phone,email,left(hire_date,10) hire_date,left(retire_date,10) retire_date from employee_copy')
     .then(result=>result[0])
 }
 

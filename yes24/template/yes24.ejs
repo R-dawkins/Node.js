@@ -51,7 +51,7 @@
 </body>
 <script>
 function printList(category,page){
-  const url = "/"+category+"/"+page;
+  const url = "/"+category+"/"+category;
   fetch(url)
   .then(response=>response.json())
   .then(data=>{

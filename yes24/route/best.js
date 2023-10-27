@@ -9,7 +9,7 @@ router.use(express.json());
 router.get('/', yes24Controller.getBooks);
 
 //
-router.get('/:page', yes24Controller.getPages);
+router.get('/:category', yes24Controller.getPages);
 
 //
 router.delete('/delete', yes24Controller.removeBooks);

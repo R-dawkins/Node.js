@@ -124,6 +124,9 @@
         {
           window.location.reload();
         }
+        else if(result.status === 401){
+          alert('401 ERROR 로그인이 필요합니다');
+        }
       })
       .catch(console.error)
     }

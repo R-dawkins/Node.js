@@ -1,0 +1,15 @@
+로그인 인증 절차
+
+
+Client ---------<<로그인>>--------> Server[id,pass] ------------[first : id]--------> DB(MySQL)
+                                    bcypt.compare(pass,hashpass)  <------[second : hash password]------- DB(MySQL)
+                                    result: true
+                                      JWT 생성
+Client<-----------------------------쿠키[JWT]
+쿠키저장[JWT]                       res.쿠키[JWT] 쿠키안에 JWT를 넣어서 client에 응답
+새로운요청시 쿠키[JWT] -----------> req.JWT로 받아서 인증
+
+JWT : npm i jsonwebtoken
+cookie : npm i cookie-parser
+
+JWT의 내부 데이터 : Header / Payload / Signature

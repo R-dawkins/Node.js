@@ -13,10 +13,10 @@ export async function getBooks(){
   .then((result)=>result[0])
 }
 
-// GET /:page
-export async function getPages(){
+// GET /:category
+export async function getPages(category){
   return db
-  .execute("select bid, category_name,url,bname,author,translator,publisher,pday,format(price,0) price from books b inner join book_category c on b.category = c.category where b.category='BestSeller'")
+  .execute("select bid, category_name,url,bname,author,translator,publisher,pday,format(price,0) price from books b inner join book_category c on b.category = c.category where b.category=?",[category])
   .then((result)=>result[0])
 }
 
@@ -26,6 +26,14 @@ export async function removeBooks(bid){
   .execute("delete from books where bid =?",[bid])
   .then((result)=>'success')
 }
+
+
+
+
+
+
+
+
 
 //Home,BestSeller
 
