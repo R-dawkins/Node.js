@@ -48,6 +48,12 @@
 		table thead th {
 			border: 1px solid #c9c9c9;
 		}
+		#form a{
+			cursor: pointer;
+		}
+		#list h3{
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -67,7 +73,6 @@
 	<br>
 	<br>
 	<div id="form">
-
 	</div>
 	<div id="list">
 
@@ -143,7 +148,12 @@
 					<tr>
 						<td>${list.rownum}</td>
 						<td>${list.employee_name}</td>
-						<td>${list.employee_id}</td>
+						<td>${list.employee_id} <a onclick="displayToggle('empUpdate${list.employee_id}')">사원 정보 수정</a>
+							<form id="empUpdate${list.employee_id}" method="post" action="/employeeManagement/${list.employee_id}" style="display:none;">
+								<input type="text" name="name" id="name" placeholder="이름입력" style="width: 50%;background: lightcoral;">
+								<button type="submit">수정</button>
+							</form>
+						</td>
 						<td>${list.gender == 'M' ? '남자' : '여자'}</td>
 						<td>${list.email}</td>
 						<td>${list.phone}</td>
@@ -157,7 +167,23 @@
 					document.querySelector("#list").innerHTML = output;
 				})
 				.catch()
+				document.querySelector("#form").innerHTML = "";
 		}
+
+		// function updateEmployee(id){
+		// 	fetch('/employeeManagement',{
+		// 		method:"post",
+		// 		headers:{"content-type":"application/json"},
+		// 		body:JSON.stringify({id:id})
+		// 	})
+		// 	.then(result=>{
+		// 		if(result.status === 204){
+		// 			window.location.reload();
+		// 		}
+		// 	})
+		// }
+
+
 
 		function CallProductPage(categoryName, page) {
 			const url = "/" + categoryName + "/" + page;
@@ -241,9 +267,7 @@
 				.then(response => response.json())
 				.then((data) => {
 					const output = `
-					<form>
-						
-					</form>
+					<h3> 연도별 </h3>
 					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
 						<thead>
 						<th>주문 년도</th>
@@ -267,15 +291,158 @@
 					document.querySelector("#list").innerHTML = output;
 				})
 				.catch()
-				document.querySelector("#form").innerHTML = ''
+				document.querySelector("#form").innerHTML = `
+				<p><a onclick="CallSalesPage('salesManagement','1')">연도별</a></p>
+				<p><a onclick='CallSalesCustomer()'>고객별</a></p>
+				<p><a onclick='CallSalesAge()'>연령별</a></p>
+				<p><a onclick='CallSalesCategory()'>카테고리별</a></p>
+				<p><a onclick='CallSalesProduct()'>상품별</a></p>
+				`
 		}
+
+		function CallSalesCustomer() {
+			fetch("/salesManagement/salesCustomer")
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<h3> 고객별 </h3>
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>고객명</th>
+						<th>주문 금액</th>
+						<th>총 배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.customer_name}</td>
+						<td>${list.sub_total}원</td>
+						<td>${list.delivery_fee}원</td>
+						<td>${list.total_due}원</td>
+					</tr>
+					`).join('\n')}
+					</tbody>
+				</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+				// document.querySelector("#form").innerHTML = `
+				// <p><a onclick="CallSalesPage('salesManagement','1')">연도별</a></p>
+				// <p><a onclick='CallSalesCustomer()'>고객별</a></p>
+				// <p><a onclick='CallSalesAge()'>연령별</a></p>
+				// <p><a onclick='CallSalesCategory()'>카테고리별</a></p>
+				// <p><a onclick='CallSalesProduct()'>상품별</a></p>
+				// `
+		}
+		function CallSalesAge() {
+			fetch("/salesManagement/salesAge")
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<h3> 연령별 </h3>
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>연령</th>
+						<th>주문 금액</th>
+						<th>총 배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.age}년생</td>
+						<td>${list.sub_total}원</td>
+						<td>${list.delivery_fee}원</td>
+						<td>${list.total_due}원</td>
+					</tr>
+					`).join('\n')}
+					</tbody>
+				</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+			}
+
+			function CallSalesCategory() {
+			fetch("/salesManagement/salesCategory")
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<h3> 카테고리별 </h3>
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>카테고리</th>
+						<th>주문 금액</th>
+						<th>총 배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.category_name}</td>
+						<td>${list.sub_total}원</td>
+						<td>${list.delivery_fee}원</td>
+						<td>${list.total_due}원</td>
+					</tr>
+					`).join('\n')}
+					</tbody>
+				</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+			}
+
+			function CallSalesProduct() {
+			fetch("/salesManagement/salesProduct")
+				.then(response => response.json())
+				.then((data) => {
+					const output = `
+					<h3> 상품별 </h3>
+					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
+						<thead>
+						<th>상품명</th>
+						<th>주문 금액</th>
+						<th>총 배달비</th>
+						<th>총계</th>
+						</thead>
+						<tbody id="tbody">
+					${data.map(list =>
+						`
+					<tr>
+						<td>${list.product_name}</td>
+						<td>${list.sub_total}원</td>
+						<td>${list.delivery_fee}원</td>
+						<td>${list.total_due}원</td>
+					</tr>
+					`).join('\n')}
+					</tbody>
+				</table>
+				`;
+					document.querySelector("#list").innerHTML = output;
+				})
+				.catch()
+			}
+
+
+
+
+
+
+
+
 
 		function CallSellingPage(categoryName, page){
 			const url = "/" + categoryName + "/" + page;
 			fetch(url)
 				.then(response => response.json())
 				.then((data) => {
-					console.log(data);
 					const output = `
 					<form>
 						
@@ -320,7 +487,7 @@
 			const output = `
 			<div style="display:block">
 					<h4><a onclick="displayToggle('employeeForm')">직원 등록 창 토글</a></h4>
-					<form action="/employeemanagement/employeeReg" id="employeeForm" name="employeeForm" method="post" style="margin-top: 40px;display:none;">
+					<form action="/employeeReg" id="employeeForm" name="employeeForm" method="post" style="margin-top: 40px;display:none;">
 						<p>Employee Register Form</p>
 						<input type="text" name="name" id="name" placeholder="이름입력" style="width: 50%;background: lightcoral;">
 						<select style="display:block;width:400px" name="gender" id="gender">
@@ -329,7 +496,7 @@
 						</select>
 						<input type="text" name="email" id="email" placeholder="이메일 양식 : abc@naver.com" style="width: 50%;background: lightcoral;">
 						<input type="text" name="phone" id="phone" placeholder="휴대폰 양식 : 010-1234-5678" style="width: 50%;background: lightcoral;">
-						<button style="display:block;width:100px;margin-top:10px;" type="submit">고용하기</button>
+						<button style="display:block;width:100px;margin-top:10px;" type="submit" onclick="">고용하기</button>
 					</form>
 			</div>
 			`;
@@ -361,6 +528,11 @@
 				}
 			})
 		}
+
+		function salesCategory(category){
+
+		}
+
 	</script>
 
 </body>

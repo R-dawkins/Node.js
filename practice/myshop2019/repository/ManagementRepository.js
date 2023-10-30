@@ -1,6 +1,8 @@
 import { db } from "../db/database.js";
 
 /* 
+repository 하나에는 하나의 테이블만 사용
+Repository 앞에 테이블의 이름을 붙이는 것이 좋다
 
 고객관리 - R, D(회원탈퇴 신청 후)
 사원관리 - CRUD
@@ -58,11 +60,34 @@ export async function getSelling(){
 
 export async function getSales(){
   return db
-    .execute('select order_date,format(sub_total,0) sub_total,format(delivery_fee,0) delivery_fee,format(total_due,0) total_due from order_header_view')
+    .execute('select order_date,format(sub_total,0) sub_total,format(delivery_fee,0) delivery_fee,format(total_due,0) total_due from order_header_view order by order_date asc')
     .then(result=>result[0])
 }
+//Sales Category
 
-//
+export async function getSalesCustomer(){
+  return db
+  .execute('select customer_name,cus_sub_total sub_total,cus_delivery_fee delivery_fee,cus_total_due total_due from cus_view')
+  .then(result=>result[0])
+}
+
+export async function getSalesAge(){
+  return db
+  .execute('select age,age_sub_total sub_total,age_delivery_fee delivery_fee,age_total_due total_due from age_view order by age asc')
+  .then(result=>result[0])
+}
+
+export async function getSalesCategory(){
+  return db
+  .execute('select category_name,sub_total,delivery_fee,total_due from cat_view')
+  .then(result=>result[0])
+}
+
+export async function getSalesProduct(){
+  return db
+  .execute('select product_name,sub_total,delivery_fee,total_due from pro_view')
+  .then(result=>result[0])
+}
 
 //DELETE
 // export async function removeCustomer(cid){

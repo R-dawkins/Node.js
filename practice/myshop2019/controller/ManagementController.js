@@ -38,4 +38,27 @@ export async function getProduct(req,res){
   res.json(rows);
 }
 
+//Sales Category start
+
+export async function getSalesCustomer(req,res){
+  const rows = await ManagementReopository.getSalesCustomer()
+  res.json(rows);
+}
+
+export async function getSalesCategory(req,res){
+  const rows = await ManagementReopository.getSalesCategory()
+  res.json(rows);
+}
+
+export async function getSalesProduct(req,res){
+  const rows = await ManagementReopository.getSalesProduct()
+  res.json(rows);
+}
+
+export async function getSalesAge(req,res){
+  const rows = await ManagementReopository.getSalesAge()
+  res.json(rows);
+}
+
+//Sales Category end
 

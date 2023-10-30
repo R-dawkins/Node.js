@@ -1,8 +1,9 @@
 import express from 'express';
-import * as ManagementController from '../controller/ManagementController.js'
+import * as createController from '../controller/createController.js'
 const router = express.Router();
 router.use(express.urlencoded({extended:true}))
 router.use(express.json());
-router.get('/1', ManagementController.getSelling)
+
+router.post('/employeeReg',createController.postEmployee)
 
 export default router;
