@@ -39,7 +39,7 @@ export async function getEmployee(){
 
 export async function getProduct(){
   return db
-    .execute('select row_number() over(order by sub_category_id) rownum,product_id,product_name,sub_category_id,sub_category_name,category_id,category_name from product_view')
+    .execute('select row_number() over(order by sub_category_id) rownum,p.product_id,product_name,s.sub_category_id,sub_category_name,c.category_id,category_name from product_copy p,sub_category s, category c where p.sub_category_id = s.sub_category_id and s.category_id = c.category_id')
     .then(result=>result[0])
 }
 
@@ -58,12 +58,12 @@ export async function getSelling(){
 }
 
 
+//Sales Section
 export async function getSales(){
   return db
     .execute('select order_date,format(sub_total,0) sub_total,format(delivery_fee,0) delivery_fee,format(total_due,0) total_due from order_header_view order by order_date asc')
     .then(result=>result[0])
 }
-//Sales Category
 
 export async function getSalesCustomer(){
   return db

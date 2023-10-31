@@ -4,6 +4,10 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/orderPage.js"></script>
+	<script src="/salesPage.js"></script>
+	<script src="/productPage.js"></script>
+	<script src="/sellingPage.js"></script>
 	<title>Document</title>
 	<style>
 		div,
@@ -130,7 +134,7 @@
 				.then(response => response.json())
 				.then((data) => {
 					const output = `
-					<h4><a onclick="createForm()">Employee Register</a></h4>
+					<h4><a onclick="createEmployeeForm()">Employee Register</a></h4>
 					<table style="width: 100%;min-height: 700px;border: 1px solid gray;">
 						<thead>
 						<th>번호</th>
@@ -148,7 +152,7 @@
 					<tr>
 						<td>${list.rownum}</td>
 						<td>${list.employee_name}</td>
-						<td>${list.employee_id} <a onclick="displayToggle('empUpdate${list.employee_id}')">사원 정보 수정</a>
+						<td>${list.employee_id} <a href="#" onclick="displayToggle('empUpdate${list.employee_id}')">사원 정보 수정</a>
 							<form id="empUpdate${list.employee_id}" method="post" action="/employeeManagement/${list.employee_id}" style="display:none;">
 								<input type="text" name="name" id="name" placeholder="이름입력" style="width: 50%;background: lightcoral;">
 								<button type="submit">수정</button>
@@ -158,7 +162,7 @@
 						<td>${list.email}</td>
 						<td>${list.phone}</td>
 						<td>${list.hire_date}</td>
-						<td>${list.retire_date === null ? `<a style='cursor:pointer;' onclick="remove('${list.employee_id}')">퇴사시키기</a>` : list.retire_date}</td>
+						<td>${list.retire_date === null ? `<a style='cursor:pointer;' onclick="removeEmployee('${list.employee_id}')">퇴사시키기</a>` : list.retire_date}</td>
 					</tr>
 					`).join('\n')}
 					</tbody>
@@ -170,21 +174,8 @@
 				document.querySelector("#form").innerHTML = "";
 		}
 
-		// function updateEmployee(id){
-		// 	fetch('/employeeManagement',{
-		// 		method:"post",
-		// 		headers:{"content-type":"application/json"},
-		// 		body:JSON.stringify({id:id})
-		// 	})
-		// 	.then(result=>{
-		// 		if(result.status === 204){
-		// 			window.location.reload();
-		// 		}
-		// 	})
-		// }
 
-
-
+/*
 		function CallProductPage(categoryName, page) {
 			const url = "/" + categoryName + "/" + page;
 			fetch(url)
@@ -337,6 +328,7 @@
 				// <p><a onclick='CallSalesProduct()'>상품별</a></p>
 				// `
 		}
+
 		function CallSalesAge() {
 			fetch("/salesManagement/salesAge")
 				.then(response => response.json())
@@ -368,7 +360,7 @@
 				.catch()
 			}
 
-			function CallSalesCategory() {
+		function CallSalesCategory() {
 			fetch("/salesManagement/salesCategory")
 				.then(response => response.json())
 				.then((data) => {
@@ -399,7 +391,7 @@
 				.catch()
 			}
 
-			function CallSalesProduct() {
+		function CallSalesProduct() {
 			fetch("/salesManagement/salesProduct")
 				.then(response => response.json())
 				.then((data) => {
@@ -429,14 +421,6 @@
 				})
 				.catch()
 			}
-
-
-
-
-
-
-
-
 
 		function CallSellingPage(categoryName, page){
 			const url = "/" + categoryName + "/" + page;
@@ -482,8 +466,8 @@
 				.catch()
 				document.querySelector("#form").innerHTML = ''
 		}
-
-		function createForm(){
+*/
+		function createEmployeeForm(){
 			const output = `
 			<div style="display:block">
 					<h4><a onclick="displayToggle('employeeForm')">직원 등록 창 토글</a></h4>
@@ -502,6 +486,8 @@
 			`;
 			document.querySelector("#form").innerHTML = output;
 		}
+
+
 		function displayToggle(id){
     const displayForm = document.querySelector(`#${id}`)
     const display = displayForm.style.display;
@@ -514,8 +500,8 @@
     }
     }
 
-		function remove(id){
-			fetch('/employeemanagement/remove',{
+		function removeEmployee(id){
+			fetch('/employeemanagement/employee/remove',{
 				method:"delete",
 				headers:{"content-type":"application/json"},
 				body: JSON.stringify({id:id})
@@ -527,10 +513,6 @@
 					console.error
 				}
 			})
-		}
-
-		function salesCategory(category){
-
 		}
 
 	</script>

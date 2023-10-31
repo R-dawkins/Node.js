@@ -6,5 +6,5 @@ const router = express.Router();
 router.use(express.urlencoded({extended:true}))
 router.use(express.json());
 router.get('/1', ManagementController.getEmployee);
-router.delete('/remove', removeController.remove);
+router.delete('/employee/remove', removeController.removeEmployee);
 export default router;

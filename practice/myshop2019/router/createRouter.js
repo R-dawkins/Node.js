@@ -5,5 +5,5 @@ router.use(express.urlencoded({extended:true}))
 router.use(express.json());
 
 router.post('/employeeReg',createController.postEmployee)
-
+router.post('/productReg',createController.postProduct)
 export default router;
