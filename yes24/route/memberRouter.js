@@ -9,5 +9,5 @@ router.use(express.json());
 router.get('/', memberController.getloginPage)
 router.post('/signup', memberController.signUp)
 router.post('/login', memberController.login)
-
+router.get('/removecookie', memberController.removeCookie)
 export default router;

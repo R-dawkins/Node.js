@@ -36,3 +36,8 @@ function createToken(id){
     {id : id}, '704YJJ&3si|?'
   )
 }
+
+export async function removeCookie(req,res){
+  res.clearCookie('x_auth')
+  res.redirect('/')
+}
